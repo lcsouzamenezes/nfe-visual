@@ -7,7 +7,9 @@ COPY package*.json ./
 
 COPY . /app
 
-RUN npm install --only=prod
+# RUN npm install --only=prod
+RUN npm install
+
 
 RUN npm run build
 
