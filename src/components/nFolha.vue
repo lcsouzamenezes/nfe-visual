@@ -6,7 +6,7 @@
                 <template v-for="d in data">
                     <v-subheader v-if="d.title">{{d.title}}</v-subheader>
                     <v-layout  row wrap>
-                        <v-flex v-for="field in d.data" >
+                        <v-flex v-bind="field.flex" v-for="field in d.data" >
                             <nCel :label="field.label" :value="field.value" ></nCel>
                         </v-flex>
                     </v-layout>

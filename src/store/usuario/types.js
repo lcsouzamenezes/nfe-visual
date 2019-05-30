@@ -1,1 +1,2 @@
 export const SYNC_USUARIO = 'SYNC_USUARIO'
+export const SYNC_USUARIO_LOCAL = 'SYNC_USUARIO_LOCAL'

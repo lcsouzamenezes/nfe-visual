@@ -1,6 +1,6 @@
 <template>
     <div>
-      <v-btn to="/nfe/listar">Voltar</v-btn>
+      <v-btn @click="$router.go(-1)">Voltar</v-btn>
         <v-container  grid-list-md text-xs-center>
             <v-subheader>
                 Dados Gerais
@@ -15,7 +15,7 @@
                         <v-card-text class="px-0 py-0">
                             <h5>Chave de Acesso:</h5>
                             <strong>
-                                {{this.nota.infNFe.NFe.infNFe.attributes.Id}}
+                                {{this.nota.data.NFe.infNFe.attributes.Id}}
                             </strong>
                         </v-card-text>
                     </v-card>
@@ -29,7 +29,7 @@
                         >
                             <h5>Número:</h5>
                             <strong>
-                                {{this.nota.infNFe.NFe.infNFe.ide.nNF}}
+                                {{this.nota.data.NFe.infNFe.ide.nNF}}
                             </strong>
                         </v-card-text>
                     </v-card>
@@ -43,7 +43,7 @@
                         >
                             <h5>Versão XML</h5>
                             <strong>
-                                {{this.nota.infNFe.NFe.infNFe.attributes.versao}}
+                                {{this.nota.data.NFe.infNFe.attributes.versao}}
                             </strong>
                         </v-card-text>
                     </v-card>
@@ -126,7 +126,7 @@ export default {
         }),
     },
     watch:{
-        notaGetter(v) { 
+        notaGetter(v) {
             const index = (this.tabs.findIndex(t => t.id == 0 ))
             this.tabs[index].data = v
             this.nota = v
@@ -136,7 +136,15 @@ export default {
             //this.tabs[5].data = v.infNFe.NFe.infNFe.transp
             this.tabs[6].data = v.infNFe.NFe.infNFe.cobr
             //console.log(v.infNFe.NFe.infNFe.emit)
-        }
+        },
+        $route(to, from) {
+            if (
+                typeof to.params.id !== 'undefined'
+                && to.params.id !== from.params.id
+            ) {
+                this.syncNotaAction(this.$route.params.id)
+            }
+        },
     }
 }
 </script>

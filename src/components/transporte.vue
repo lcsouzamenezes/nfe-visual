@@ -30,15 +30,15 @@
                    data: [
                        {
                            label: 'Quantidade',
-                           value: this.data.vol.qVol
+                           value: this.data.vol ? this.data.vol.qVol : ''
                        },
                        {
                            label: 'Espécie',
-                           value: this.data.vol.qVol
+                           value: this.data.vol ? this.data.vol.qVol : ''
                        },
                        {
                            label: 'Marca dos Volumes',
-                           value: this.data.vol.marca
+                           value: this.data.vol ? this.data.vol.marca : ''
                        },
                    ]
                   },
@@ -46,15 +46,15 @@
                    data: [
                        {
                            label: 'Numeração',
-                           value: this.data.vol.nVol
+                           value: this.data.vol ? this.data.vol.nVol : ''
                        },
                        {
                            label: 'Peso Líquido',
-                           value: this.data.vol.pesoL
+                           value: this.data.vol ? this.data.vol.pesoL : ''
                        },
                        {
                            label: 'Peso Bruto',
-                           value: this.data.vol.pesoB
+                           value: this.data.vol ? this.data.vol.pesoB : ''
                        }
                    ]}
               ]

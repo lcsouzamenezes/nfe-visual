@@ -3,7 +3,7 @@
     <div class="display-1">
         Bem vindo ao NF-E Visual!
     </div>
-    <v-btn to="/nfe/listar">Listar Notas</v-btn>
+    <v-btn to="/nfe/notas-by-user">Listar Notas</v-btn>
   </v-container>
 </template>
 
@@ -13,10 +13,6 @@ export default {
     name:'Home',
     created(){
         this.syncUsuarioAction(this.$route.params.token)
-    },
-    mounted() {
-        console.log(this.$route.params.token)
-        localStorage.setItem('token', this.$route.params.token);
     },
     computed:{
         ...mapGetters({

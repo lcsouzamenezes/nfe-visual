@@ -3,15 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-      {
-          path: '/nfe/nota',
-          name: 'nota',
-          component: () => import(/* webpackChunkName: "nota" */ './nfe/views/Nota.vue')
-      },
+const routes =  [
       {
           path: '/nfe/nota/:id',
           name: 'nota',
@@ -23,19 +15,45 @@ export default new Router({
           component: () => import(/* webpackChunkName: "notas" */ './nfe/views/Notas.vue')
       },
       {
-          path: '/nfe',
-          name: 'home',
-          component: () => import(/* webpackChunkName: "notas" */ './nfe/views/Home.vue')
+          path: '/login-again',
+          name: 'login-again',
+          component: () => import(/* webpackChunkName: "LoginAgain" */ './nfe/views/LoginAgain.vue')
+      },
+      {
+          path: '/nfe/notas-by-user',
+          name: 'notas-by-user',
+          component: () => import(/* webpackChunkName: "NotasByUser" */ './nfe/views/NotasByUser.vue')
       },
       {
           path: '/nfe/:token',
           name: 'home',
-          component: () => import(/* webpackChunkName: "notas" */ './nfe/views/Home.vue')
+          component: () => import(/* webpackChunkName: "Home" */ './nfe/views/Home.vue')
       },
-      {
-          path: '/nfe/cadastrar',
-          name: 'cadastrar',
-          component: () => import(/* webpackChunkName: "cadastrar" */ './nfe/views/Cadastrar.vue')
-    }
   ]
-})
+
+const router = new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: routes
+});
+
+router.beforeEach(function(to, from, next) {
+    const usuario = localStorage.getItem('usuario')
+
+    if (to.name === '/login-again') {
+        return next()
+    }
+
+    if (to.name === 'home' && !to.params.token) {
+       return  next('/login-again')
+    }
+
+    if(typeof usuario === 'undefined'){
+       return  next('/login-again')
+    }
+    console.log('te')
+
+    next()
+});
+
+export default router;

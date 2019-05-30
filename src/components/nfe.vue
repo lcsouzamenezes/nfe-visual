@@ -19,12 +19,22 @@
 </template>
 <script>
   import  nCel from '@/components/nCel'
+  import  moment from 'moment-timezone'
 
   export default {
     name: 'NFe',
       components:{
-          nCel: nCel
+          nCel: nCel,
+          moment: moment
       },
+    filters: {
+      cpf: function (value) {
+          return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      },
+      cnpj: function (value) {
+          return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3/$4-$5');
+      }
+    },
       props: {
           data: Object
       },
@@ -36,27 +46,27 @@
                    data: [
                     {
                         label: 'Modelo',
-                        value: this.data.infNFe.NFe.infNFe.ide.mod
+                        value: this.data.data.NFe.infNFe.ide.mod
                     },
                     {
                         label: 'Série',
-                        value: this.data.infNFe.NFe.infNFe.ide.serie
+                        value: this.data.data.NFe.infNFe.ide.serie
                     },
                     {
                         label: 'Número',
-                        value: this.data.infNFe.NFe.infNFe.ide.nNF
+                        value: this.data.data.NFe.infNFe.ide.nNF
                     },
                     {
                         label: 'Data de Emissão',
-                        value: this.data.infNFe.NFe.infNFe.ide.dhEmi
+                        value: moment(this.data.data.NFe.infNFe.ide.dhEmi).tz('UTC').format('DD/MM/YYYY HH:mm:ss')
                     },
                     {
                         label: 'Data Saída/Entrada',
-                        value: this.data.infNFe.NFe.infNFe.ide.dhSaiEnt
+                        value: moment(this.data.data.NFe.infNFe.ide.dhSaiEnt).tz('UTC').format('DD/MM/YYYY HH:mm:ss')
                     },
                     {
                         label: 'Valor Total da Nota Fiscal',
-                        value: this.data.infNFe.NFe.infNFe.pag.detPag.vPag
+                        value: this.currency(this.data.data.NFe.infNFe.pag.detPag.vPag)
                     },
                    ]
                 },
@@ -65,19 +75,19 @@
                    data: [
                     {
                         label: 'CNPJ',
-                        value: this.data.infNFe.NFe.infNFe.emit.CNPJ
+                        value: this.cnpj(this.data.data.NFe.infNFe.emit.CNPJ)
                     },
                     {
                         label: 'Nome / Razão Social',
-                        value: this.data.infNFe.NFe.infNFe.emit.xNome
+                        value: this.data.data.NFe.infNFe.emit.xNome
                     },
                     {
                         label: 'Inscrição Estadual',
-                        value: this.data.infNFe.NFe.infNFe.emit.IE
+                        value: this.data.data.NFe.infNFe.emit.IE
                     },
                     {
                         label: 'UF',
-                        value: this.data.infNFe.NFe.infNFe.emit.enderEmit.UF
+                        value: this.data.data.NFe.infNFe.emit.enderEmit.UF
                     },
                    ]
                 },
@@ -86,31 +96,31 @@
                    data: [
                     {
                         label: 'CPF',
-                        value: this.data.infNFe.NFe.infNFe.dest.CPF
+                        value: this.cpfCnpj(this.data.data.NFe.infNFe.dest.CPF)
                     },
                     {
                         label: 'Nome / Razão Social',
-                        value: this.data.infNFe.NFe.infNFe.dest.xNome
+                        value: this.data.data.NFe.infNFe.dest.xNome
                     },
                     {
                         label: 'UF',
-                        value: this.data.infNFe.NFe.infNFe.dest.enderDest.UF
+                        value: this.data.data.NFe.infNFe.dest.enderDest.UF
                     },
                     {
                         label: 'Inscrição Estadual',
-                        value: this.data.inscricaoEstadualDestinatario
+                        value: this.data.inscricaoEstadualDestinatario ? this.data.inscricaoEstadualDestinatario : 'N/A'
                     },
                     {
                         label: 'Destino da operação',
-                        value: this.data.destinoOperacao
+                        value: this.destinoOperacao(this.data.data.NFe.infNFe.ide.idDest)
                     },
                     {
                         label: 'Consumidor final',
-                        value: this.data.consumidorFinal
+                        value: this.consumidorFinal(this.data.data.NFe.infNFe.ide.indFinal)
                     },
                     {
                         label: 'Presença do Comprador',
-                        value: this.data.presencaComprador
+                        value: this.presencaConsumidor(this.data.data.NFe.infNFe.ide.indPres)
                     },
                    ]
                 },
@@ -119,35 +129,35 @@
                     data: [
                         {
                             label: 'Processo',
-                            value: this.data.infNFe.NFe.infNFe.ide.procEmi
+                            value: this.processo(this.data.data.NFe.infNFe.ide.procEmi),
                         },
                         {
                             label: 'Versão do Processo',
-                            value: this.data.infNFe.NFe.infNFe.ide.verProc
+                            value: this.data.data.NFe.infNFe.ide.verProc
                         },
                         {
                             label: 'Tipo de Emissão',
-                            value: this.data.tipoEmissao
+                            value: this.tipoEmissao(this.data.data.NFe.infNFe.ide.tpEmis)
                         },
                         {
                             label: 'Finalidade',
-                            value: this.data.finalidade
+                            value: this.finalidade(this.data.data.NFe.infNFe.ide.finNFe)
                         },
                         {
                             label: 'Natureza da Operação',
-                            value: this.data.natureza
+                            value: this.data.data.NFe.infNFe.ide.natOp
                         },
                         {
                             label: 'Tipo da Operação',
-                            value: this.data.tipoOperacao
+                            value: this.tipoOperacao(this.data.data.NFe.infNFe.ide.tpNF)
                         },
                         {
                             label: 'Forma de Pagamento',
-                            value: this.data.formaPagamento
+                            value: this.formaPagamento(this.data.data.NFe.infNFe.pag.detPag.indPag)
                         },
                         {
                             label: 'Digest Value da NF-e',
-                            value: this.data.digest
+                            value: (this.data.data.NFe.Signature.SignedInfo.Reference.DigestValue)
                         },
                     ]
                 },
@@ -156,15 +166,15 @@
                    data: [
                     {
                         label: 'Eventos da NF-e',
-                        value: this.data.infNFe.protNFe.infProt.xMotivo
+                        value: this.data.data.protNFe.infProt.xMotivo
                     },
                     {
                         label: 'Protocolo',
-                        value: this.data.infNFe.protNFe.infProt.nProt
+                        value: this.data.data.protNFe.infProt.nProt
                     },
                     {
                         label: 'Data Autorização',
-                        value: this.data.infNFe.protNFe.infProt.dhRecbto
+                        value: this.data.data.protNFe.infProt.dhRecbto
                     },
                     {
                         label: 'Data Inclusão AN',
@@ -174,6 +184,187 @@
                 }
             ]
         }
+      },
+      methods:{
+          currency(value) {
+//              if (typeof value !== "number") {
+ //                 return value;
+  //            }
+
+              var formatter = new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                  minimumFractionDigits: 2
+              });
+
+              return formatter.format(value);
+          },
+          cpfCnpj(value) {
+              if (value.length == 11) {
+                  return this.cpf(value)
+              }
+              return this.cnpj(value)
+          },
+          cpf: function (value) {
+              return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+          },
+          cnpj: function (value) {
+              return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+          },
+          destinoOperacao(value){
+              let data = 'N/D';
+
+              switch(value) {
+                  case '1':
+                      data = '1 - Operação interna'
+                      break
+                  case '2':
+                      data = '2 - Operação interestadual'
+                      break
+                  case '3':
+                      data = '3 - Operação com exterior.'
+                      break
+              }
+              return data
+          },
+          consumidorFinal(value){
+              let data = 'N/D';
+
+              switch(value) {
+                  case '0':
+                      data = '0 - Normal'
+                      break
+                  case '1':
+                      data = '1 - Consumidor final'
+                      break
+              }
+              return data
+          },
+          presencaConsumidor(value){
+              let data = 'N/D';
+
+              switch(value) {
+                  case '0':
+                      data = '0 - Não se aplica'
+                      break
+                  case '1':
+                      data = '1 - Operação presencial'
+                      break
+                  case '2':
+                      data = '2 - Operação não presencial, pela Internet'
+                      break
+                  case '3':
+                      data = '3 - Operação não presencial, Teleatendimento'
+                      break
+                  case '4':
+                      data = '4 - NFC-e em operação com entrega em domicílio'
+                      break
+                  case '9':
+                      data = '9 - peração não presencial'
+                      break
+              }
+
+              return data
+          },
+          processo(value) {
+              let data = 'N/D';
+
+              switch(value) {
+                  case '0':
+                      data = '0 - Emissão de NF-e com aplicativo do contribuinte.'
+                      break
+                  case '1':
+                      data = '1 - Emissão de NF-e avulsa pelo Fisco.'
+                      break
+                  case '2':
+                      data = '2 - Emissão de NF-e avulsa, pelo contribuinte com seu certificado digital, através do site do Fisco.'
+                      break
+                  case '3':
+                      data = '3 - Emissão NF-e pelo contribuinte com aplicativo fornecido pelo Fisco.'
+                      break
+              }
+              return data
+          },
+          tipoEmissao(value) {
+              let data = 'N/D';
+
+              switch(value) {
+                  case '1':
+                      data = '1 - Emissão normal'
+                      break
+                  case '2':
+                      data = '2 - Contingência FS-IA, com impressão do DANFE em formulário de segurança'
+                      break
+                  case '3':
+                      data = '3 - Contingência SCAN (Sistema de Contingência do Ambiente Nacional)'
+                      break
+                  case '4':
+                      data = '4 - Contingência DPEC (Declaração Prévia da Emissão em Contingência)'
+                      break
+                  case '5':
+                      data = '5 - Contingência FS-DA, com impressão do DANFE em formulário de segurança'
+                      break
+                  case '6':
+                      data = '6 - Contingência SVC-AN (SEFAZ Virtual de Contingência do AN)'
+                      break
+                  case '7':
+                      data = '7 - Contingência SVC-RS (SEFAZ Virtual de Contingência do RS)'
+                      break
+              }
+
+              return data
+          },
+          finalidade(value) {
+              let data = 'N/D';
+
+              switch(value) {
+                  case '1':
+                      data = '1 - NF-e normal.'
+                      break
+                  case '2':
+                      data = '2 - NF-e complementar.'
+                      break
+                  case '3':
+                      data = '3 - NF-e de ajuste.'
+                      break
+                  case '4':
+                      data = '4 = Devolução de mercadoria.'
+                      break
+              }
+
+              return data
+          },
+          tipoOperacao(value){
+              let data = 'N/D';
+
+              switch(value) {
+                  case '0':
+                      data = '0 - Entrada.'
+                      break
+                  case '1':
+                      data = '1 - Saída.'
+                      break
+              }
+
+              return data
+          },
+          formaPagamento(value){
+              let data = 'N/D';
+
+              switch(value) {
+                  case '0':
+                      data = '0 - Pagamento à vista.'
+                      break
+                  case '1':
+                      data = '1 - Pagamento a prazo.'
+                      break
+                  case '2':
+                      data = '2 - Outros.'
+                      break
+              }
+
+              return data
+          }
       }
   }
 </script>

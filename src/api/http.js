@@ -12,7 +12,6 @@ import axios from 'axios';
 // }, err => Promise.reject(err));
 
 let instance = {};
-    console.log(process.env.VUE_APP_API)
 if (process.env.NODE_ENV !== 'production') {
 
     instance = axios.create({

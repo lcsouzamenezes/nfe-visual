@@ -8,7 +8,7 @@
         fixed
     >
     <v-toolbar-title style="width: 300px" class="ml-0 pl-3" to="/">
-        <v-btn class="hidden-sm-and-down " flat to="/nfe">NF-E Visual</v-btn>
+        <v-btn class="hidden-sm-and-down " flat to="/nfe/listar">NF-E Visual</v-btn>
     </v-toolbar-title>
     <v-text-field
         flat
@@ -16,10 +16,14 @@
         prepend-icon="search"
         label="Search"
         class="hidden-sm-and-down"
-        @keyup.enter="search()"
+        @keyup.enter="search(searchNota)"
+        v-model="searchNota"
     ></v-text-field>
     <v-spacer></v-spacer>
-    <v-menu
+
+    <p>{{(this.usuarioGetter ? this.usuarioGetter.data.auth.usu_identificacao : '111111111111' ) | cpf}}<br>
+    {{(this.usuarioGetter ? this.usuarioGetter.data.auth.usu_nome : '')}}</p>
+    <!--v-menu
         :close-on-content-click="false"
         offset-y
     >
@@ -49,7 +53,7 @@
             </v-list>
             <v-divider/>
         </v-card>
-    </v-menu>
+    </v-menu-->
     </v-toolbar>
 
     <v-content>
@@ -62,29 +66,34 @@
 import { mapActions, mapGetters } from 'vuex';
 export default {
     name: 'App',
+    filters: {
+      cpf: function (value) {
+          return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      }
+    },
     data () {
         return {
-            //
+            searchNota: '',
         }
     },
-    created(){
-        this.syncUsuarioAction(this.$route.params.token)
+    created() {
+        this.syncUsuarioLocalAction()
     },
     computed:{
         ...mapGetters({
             usuarioGetter: 'usuario/usuarioGetter'
         }),
         usuario() {
-            console.log(Object.keys(this.usuarioGetter).length)
             return (typeof this.usuarioGetter !== 'undefined' && Object.keys(this.usuarioGetter).length > 0) ? this.usuarioGetter : {}
         }
     },
     methods:{
         ...mapActions({
-            syncUsuarioAction: 'usuario/syncUsuarioAction'
+            syncUsuarioLocalAction: 'usuario/syncUsuarioLocalAction'
         }),
         search() {
-            this.$router.push('/nfe/nota');
+            this.$router.push(`/nfe/nota/${this.searchNota}`);
+            this.searchNota = '';
         }
     }
 }
