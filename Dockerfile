@@ -20,6 +20,9 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 EXPOSE 8081
 
+RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
+RUN chgrp -R root /var/cache/nginx
+
 RUN addgroup nginx root
 
 USER nginx
