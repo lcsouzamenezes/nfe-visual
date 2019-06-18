@@ -15,14 +15,15 @@
         </v-sheet>
 </template>
 <script>
-  import nCel from '@/components/nCel'
-  export default {
-    name: 'nFolha',
-      props: {
-          data: Array,
-      },
-      components:{
-          nCel: nCel
-      }
-  }
+import nCel from '@/components/nCel';
+
+export default {
+  name: 'nFolha',
+  props: {
+    data: Array,
+  },
+  components: {
+    nCel,
+  },
+};
 </script>

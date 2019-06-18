@@ -16,44 +16,44 @@
 
 <script>
 
-  import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-  export default {
-    data(){
-        return {
-            headers: [
-                {
-                  text: 'ID',
-                  value: 'id',
-                },
-                {
-                  text: 'Data',
-                  value: 'data',
-                },
-                {
-                  text: 'Destinatario',
-                  value: 'destinatario',
-                }
-            ],
-            data: [
+export default {
+  data() {
+    return {
+      headers: [
+        {
+          text: 'ID',
+          value: 'id',
+        },
+        {
+          text: 'Data',
+          value: 'data',
+        },
+        {
+          text: 'Destinatario',
+          value: 'destinatario',
+        },
+      ],
+      data: [
 
-            ]
-        }
-    },
-    created(){
-       this.notasAction()
-    },
-    computed: {
-      ...mapGetters({
-          notasGetter: 'nota/notasGetter',
-      })
-    },
-    methods: {
-        ...mapActions({
-            notasAction: 'nota/notasAction',
-        })
-    }
-  }
+      ],
+    };
+  },
+  created() {
+    this.notasAction();
+  },
+  computed: {
+    ...mapGetters({
+      notasGetter: 'nota/notasGetter',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      notasAction: 'nota/notasAction',
+    }),
+  },
+};
 </script>
 
 <style>

@@ -31,55 +31,55 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        data(){
-            return {
-                pagination: {
-                    rowsPerPage: 10
-                },
-                headers: [
-                    {
-                        text: 'Chave de Acesso',
-                        value: 'chNFe',
-                    },
-                    {
-                        text: 'Número',
-                        value: 'data.NFe.infNFe.ide.nNF',
-                    },
-                    {
-                        text: 'CPF/CNPJ',
-                        value: 'data',
-                    },
-                    {
-                        text: 'Destinatario',
-                        value: 'destinatario',
-                    },
-                    {
-                        text: 'Ações',
-                        value: '',
-                    }
-                ],
-                data: [
+export default {
+  data() {
+    return {
+      pagination: {
+        rowsPerPage: 10,
+      },
+      headers: [
+        {
+          text: 'Chave de Acesso',
+          value: 'chNFe',
+        },
+        {
+          text: 'Número',
+          value: 'data.NFe.infNFe.ide.nNF',
+        },
+        {
+          text: 'CPF/CNPJ',
+          value: 'data',
+        },
+        {
+          text: 'Destinatario',
+          value: 'destinatario',
+        },
+        {
+          text: 'Ações',
+          value: '',
+        },
+      ],
+      data: [
 
-                ]
-            }
-        },
-        created(){
-            this.notasAction()
-        },
-        computed: {
-            ...mapGetters({
-                notasGetter: 'nota/notasGetter',
-            })
-        },
-        methods: {
-            ...mapActions({
-                notasAction: 'nota/notasAction',
-            })
-        }
-    }
+      ],
+    };
+  },
+  created() {
+    this.notasAction();
+  },
+  computed: {
+    ...mapGetters({
+      notasGetter: 'nota/notasGetter',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      notasAction: 'nota/notasAction',
+    }),
+  },
+};
 </script>
 
 <style>
