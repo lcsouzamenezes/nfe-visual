@@ -119,7 +119,7 @@
                                     :multi-line="mode === 'multi-line'"
                                     right
                                     :timeout="timeout"
-                                    bottom
+                                    top
                                     :color="statusSnackBar"
                                     :vertical="mode === 'vertical'"
                             >
@@ -171,7 +171,7 @@
                 y: 'top',
                 x: null,
                 mode: '',
-                timeout: 2500,
+                timeout: 1500,
                 text: '',
                 items: [
                     { id: '1', label: 'Produção 1' },
