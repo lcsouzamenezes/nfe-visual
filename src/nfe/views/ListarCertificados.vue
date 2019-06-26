@@ -32,9 +32,36 @@
                     <td class="text-xs-left">{{ props.item.cnpj | cnpj }}</td>
                     <td class="text-xs-center">{{ props.item.tpAmb }}</td>
                     <td class="text-xs-left">{{ props.item.path }}</td>
+                    <td class="justify-center layout px-0">
+                        <v-icon
+                                small
+                                @click="deleteItem(props.item._id)"
+                        >
+                            delete
+                        </v-icon>
+                    </td>
                 </template>
             </v-data-table>
         </v-container>
+        <!--dialog excluir-->
+        <v-dialog
+                v-model="dialogExcluir"
+                :max-width="options.width"
+                @keydown.esc="cancel"
+                v-bind:style="{ zIndex: options.zIndex }"
+        >
+            <v-card>
+                <v-toolbar dark :color="options.color" dense flat>
+                    <v-toolbar-title class="white--text">Deletar</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>Deseja excluir o certificado? </v-card-text>
+                <v-card-actions class="pt-0">
+                    <v-spacer></v-spacer>
+                    <v-btn color="grey" flat="flat" @click="dialogExcluir = false">Cancelar</v-btn>
+                    <v-btn color="primary darken-1" flat="flat" @click="submit">Sim</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -49,8 +76,19 @@
         },
         data(){
             return {
+                options: {
+                    color: 'red',
+                    width: 290,
+                    zIndex: 200
+                },
+
                 loading: true,
                 pagination:{rowsPerPage: 10},
+                dialogExcluir: false,
+                items: [
+                    { id: '1', label: 'Produção 1' },
+                    { id: '2', label: 'Homologação 2' },
+                ],
                 headers: [
                     {
                         text: 'Razão Social',
@@ -71,6 +109,10 @@
                         text: 'Certificado',
                         align: 'left',
                         value: 'path',
+                    },
+                    {
+                        text: 'Ações',
+                        align: 'center',
                     },
                 ],
                 data: []
@@ -94,13 +136,23 @@
         },
         computed: {
             ...mapGetters({
-                listarCertificadoGetter: 'certificado/listarCertificadoGetter'
+                listarCertificadoGetter: 'certificado/listarCertificadoGetter',
+                excluirCertificadoGetter: 'certificado/excluirCertificadoGetter',
             })
         },
         methods: {
             ...mapActions({
                 listarCertificadoAction: 'certificado/listarCertificadoAction',
-            })
+                excluirCertificadoAction: 'certificado/excluirCertificadoAction',
+            }),
+            deleteItem () {
+                this.dialogExcluir = true;
+            },
+
+            submit (certificadoId) {
+                console.log(certificadoId);
+                this.excluirCertificadoAction(certificadoId);
+            }
         }
     }
 </script>

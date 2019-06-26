@@ -18,3 +18,9 @@ export const syncCertificado = (params) => {
 export const syncListarCertificado  = function() {
     return http.getRequest('/admin/certificados');
 };
+
+export const syncExcluirCertificado = (id) => {
+    const path = '/admin/certificado';
+
+    return http.deleteRequest(path, (id));
+};

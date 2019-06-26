@@ -2,7 +2,8 @@ import * as types from './types'
 
 export const state = {
   certificado: {},
-  listarCertificado: []
+  listarCertificado: [],
+  excluirCertificado: []
 };
 
 export const mutations = {
@@ -14,4 +15,8 @@ export const mutations = {
       state.listarCertificado = params;
       localStorage.setItem('listarCertificado', JSON.stringify(params));
     },
+    [types.SYNC_EXCLUIR_CERTIFICADO] (state, params) {
+      state.excluirCertificado = params;
+      localStorage.setItem('excluirCertificado', JSON.stringify(params));
+    }
 };
