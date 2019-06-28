@@ -1,5 +1,5 @@
-import * as types from './types'
+import * as types from './types';
 
 export const dadosMenu = ({ commit }) => {
-  commit(types.SET_REGISTROS_TABELA, {})
-}
+  commit(types.SET_REGISTROS_TABELA, {});
+};

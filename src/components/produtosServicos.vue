@@ -487,19 +487,20 @@
 </template>
 
 <script>
-  import nFolha from '@/components/nFolha'
-  export default {
-    name: 'destinatario',
-      props: {
-          data: Object
-      },
-      components:{
-          nFolha: nFolha
-      },
-      computed:{
-          dataMod(){
-              return []
-          }
-      }
-  }
+import nFolha from '@/components/nFolha';
+
+export default {
+  name: 'destinatario',
+  props: {
+    data: Object,
+  },
+  components: {
+    nFolha,
+  },
+  computed: {
+    dataMod() {
+      return [];
+    },
+  },
+};
 </script>

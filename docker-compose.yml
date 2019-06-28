@@ -12,5 +12,5 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - VUE_APP_API=http://localhost:8081
+      - VUE_APP_API=https://nfe.backend:8443 # endereço do backend nfe.
       - VUE_APP_AUTH_JWT=http://localhost

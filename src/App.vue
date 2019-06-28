@@ -128,43 +128,44 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+
 export default {
-    name: 'App',
-    filters: {
-      cpf: function (value) {
-          return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      }
+  name: 'App',
+  filters: {
+    cpf(value) {
+      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     },
-    data () {
-        return {
-            searchNota: '',
-        }
+  },
+  data() {
+    return {
+      searchNota: '',
+    };
+  },
+  created() {
+    this.syncUsuarioLocalAction();
+  },
+  computed: {
+    ...mapGetters({
+      usuarioGetter: 'usuario/usuarioGetter',
+    }),
+    usuario() {
+      return (typeof this.usuarioGetter !== 'undefined' && Object.keys(this.usuarioGetter).length > 0) ? this.usuarioGetter : {};
     },
-    created() {
-        this.syncUsuarioLocalAction()
+    primeiraLetraNomeUsuario() {
+      return this.usuarioGetter.data.auth.usu_nome.substr(0, 1);
     },
-    computed:{
-        ...mapGetters({
-            usuarioGetter: 'usuario/usuarioGetter'
-        }),
-        usuario() {
-            return (typeof this.usuarioGetter !== 'undefined' && Object.keys(this.usuarioGetter).length > 0) ? this.usuarioGetter : {}
-        },
-        primeiraLetraNomeUsuario() {
-            return this.usuarioGetter.data.auth.usu_nome.substr(0, 1);
-        },
-        nomeUsuario() {
-            return this.usuarioGetter.data.auth.usu_nome.split(' ')[0];
-        },
+    nomeUsuario() {
+      return this.usuarioGetter.data.auth.usu_nome.split(' ')[0];
     },
-    methods:{
-        ...mapActions({
-            syncUsuarioLocalAction: 'usuario/syncUsuarioLocalAction'
-        }),
-        search() {
-            this.$router.push(`/nfe/nota/${this.searchNota}`);
-            this.searchNota = '';
-        }
-    }
-}
+  },
+  methods: {
+    ...mapActions({
+      syncUsuarioLocalAction: 'usuario/syncUsuarioLocalAction',
+    }),
+    search() {
+      this.$router.push(`/nfe/nota/${this.searchNota}`);
+      this.searchNota = '';
+    },
+  },
+};
 </script>

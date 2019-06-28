@@ -9,20 +9,21 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+
 export default {
-    name:'Home',
-    created(){
-        this.syncUsuarioAction(this.$route.params.token)
-    },
-    computed:{
-        ...mapGetters({
-            usuarioGetter: 'usuario/usuarioGetter'
-        })
-    },
-    methods:{
-        ...mapActions({
-            syncUsuarioAction: 'usuario/syncUsuarioAction'
-        })
-    }
-}
+  name: 'Home',
+  created() {
+    this.syncUsuarioAction(this.$route.params.token);
+  },
+  computed: {
+    ...mapGetters({
+      usuarioGetter: 'usuario/usuarioGetter',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      syncUsuarioAction: 'usuario/syncUsuarioAction',
+    }),
+  },
+};
 </script>

@@ -66,64 +66,64 @@ import { mapActions, mapGetters } from 'vuex';
 import carregando from '@/components/carregando';
 
 export default {
-    components: {
-        carregando,
-    },
-    data(){
-        return {
-            loading: true,
-            pagination:{rowsPerPage: 10},
-            headers: [
-                {
-                  text: 'Chave de Acesso',
-                  value: 'chNFe',
-                },
-                {
-                  text: 'Emitente',
-                  value: 'data',
-                },
-                {
-                  text: 'Destinatário',
-                  value: 'destinatario',
-                },
-                {
-                  text: 'Ações',
-                  align: 'center',
-                  value: '',
-                }
-            ],
-            data: [ ]
-        }
-    },
-    filters: {
-      cpf: function (value) {
-          return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      },
-      cnpj: function (value) {
-          return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-      }
-    },
-    watch: {
-        notasGetter() {
-            this.loading = false;
+  components: {
+    carregando,
+  },
+  data() {
+    return {
+      loading: true,
+      pagination: { rowsPerPage: 10 },
+      headers: [
+        {
+          text: 'Chave de Acesso',
+          value: 'chNFe',
         },
+        {
+          text: 'Emitente',
+          value: 'data',
+        },
+        {
+          text: 'Destinatário',
+          value: 'destinatario',
+        },
+        {
+          text: 'Ações',
+          align: 'center',
+          value: '',
+        },
+      ],
+      data: [],
+    };
+  },
+  filters: {
+    cpf(value) {
+      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     },
-    created(){
-       this.syncNotasByUserAction(this.usuarioGetter.data.auth.usu_identificacao)
+    cnpj(value) {
+      return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     },
-    computed: {
-      ...mapGetters({
-          notasGetter: 'nota/notasGetter',
-          usuarioGetter: 'usuario/usuarioGetter'
-      })
+  },
+  watch: {
+    notasGetter() {
+      this.loading = false;
     },
-    methods: {
-        ...mapActions({
-            notasAction: 'nota/notasAction',
-            syncNotasByUserAction : 'nota/syncNotasByUserAction'
-        })
-    }
-}
+  },
+  created() {
+    this.syncNotasByUserAction(this.usuarioGetter.data.auth.usu_identificacao);
+  },
+  computed: {
+    ...mapGetters({
+      notasGetter: 'nota/notasGetter',
+      usuarioGetter: 'usuario/usuarioGetter',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      notasAction: 'nota/notasAction',
+      syncNotasByUserAction: 'nota/syncNotasByUserAction',
+    }),
+  },
+};
 </script>
 
 <style>

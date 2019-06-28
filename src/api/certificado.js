@@ -1,13 +1,13 @@
 import * as http from './http';
 
 const buildData = (params) => {
-    const bodyFormData = new FormData();
+  const bodyFormData = new FormData();
 
-    Object.keys(params).forEach((key) => {
-        bodyFormData.append(key, params[key]);
-    });
+  Object.keys(params).forEach((key) => {
+    bodyFormData.append(key, params[key]);
+  });
 
-    return bodyFormData;
+  return bodyFormData;
 };
 
 export const syncCertificado = (params) => {

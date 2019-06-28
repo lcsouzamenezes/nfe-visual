@@ -17,12 +17,12 @@
 
 <script>
 export default {
-    name: 'carregando',
-    props: {
-        text: {
-            type: String,
-            default: '',
-        },
+  name: 'carregando',
+  props: {
+    text: {
+      type: String,
+      default: '',
     },
+  },
 };
 </script>

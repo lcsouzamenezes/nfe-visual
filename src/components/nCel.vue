@@ -9,11 +9,11 @@
     </v-card>
 </template>
 <script>
-  export default {
-    name: 'nCel',
-      props: {
-        label: String,
-        value: [String, Number]
-      },
-  }
+export default {
+  name: 'nCel',
+  props: {
+    label: String,
+    value: [String, Number],
+  },
+};
 </script>

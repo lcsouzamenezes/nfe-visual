@@ -1,9 +1,8 @@
-import * as types from './types'
+import * as types from './types';
 
 export const state = {
   certificado: {},
   listarCertificado: [],
-  excluirCertificado: []
 };
 
 export const mutations = {

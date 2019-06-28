@@ -137,7 +137,6 @@
         computed: {
             ...mapGetters({
                 listarCertificadoGetter: 'certificado/listarCertificadoGetter',
-                excluirCertificadoGetter: 'certificado/excluirCertificadoGetter',
             })
         },
         methods: {
