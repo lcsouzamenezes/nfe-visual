@@ -35,7 +35,7 @@
                     <td class="justify-center layout px-0">
                         <v-icon
                                 small
-                                @click="deleteItem(props.item._id)"
+                                @click="dialogExcluir = true; itemIdParaExclusao = props.item._id;"
                         >
                             delete
                         </v-icon>
@@ -58,7 +58,7 @@
                 <v-card-actions class="pt-0">
                     <v-spacer></v-spacer>
                     <v-btn color="grey" flat="flat" @click="dialogExcluir = false">Cancelar</v-btn>
-                    <v-btn color="primary darken-1" flat="flat" @click="submit">Sim</v-btn>
+                    <v-btn color="primary darken-1" flat="flat" @click="deletarItem">Sim</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -81,7 +81,7 @@
                     width: 290,
                     zIndex: 200
                 },
-
+                itemIdParaExclusao: null,
                 loading: true,
                 pagination:{rowsPerPage: 10},
                 dialogExcluir: false,
@@ -145,14 +145,11 @@
                 listarCertificadoAction: 'certificado/listarCertificadoAction',
                 excluirCertificadoAction: 'certificado/excluirCertificadoAction',
             }),
-            deleteItem () {
-                this.dialogExcluir = true;
-            },
+            deletarItem () {
+                this.dialogExcluir = false;
+                this.excluirCertificadoAction(this.itemIdParaExclusao);
 
-            submit (certificadoId) {
-                console.log(certificadoId);
-                this.excluirCertificadoAction(certificadoId);
-            }
+            },
         }
     }
 </script>

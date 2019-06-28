@@ -13,10 +13,13 @@ export const mutations = {
     },
     [types.SYNC_LISTAR_CERTIFICADO] (state, params) {
       state.listarCertificado = params;
-      localStorage.setItem('listarCertificado', JSON.stringify(params));
     },
-    [types.SYNC_EXCLUIR_CERTIFICADO] (state, params) {
-      state.excluirCertificado = params;
-      localStorage.setItem('excluirCertificado', JSON.stringify(params));
+    [types.SYNC_EXCLUIR_CERTIFICADO] (state, certificadoId) {
+        state.listarCertificado.find( (certificado, index) => {
+            if (certificado._id === certificadoId){
+                return state.listarCertificado.splice(index, 1);
+            }
+        });
+
     }
 };
