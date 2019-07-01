@@ -24,3 +24,9 @@ export const syncExcluirCertificado = (id) => {
 
     return http.deleteRequest(path, (id));
 };
+
+export const syncEditarCertificado = (params) => {
+    const path = '/admin/certificado';
+
+    return http.putRequest(path, buildData(params), params._id);
+};

@@ -33,3 +33,15 @@ export const excluirCertificadoAction = async ({ commit }, id) => {
         });
     return result;
 };
+
+export const editarCertificadoAction = async ({ commit }, params) => {
+    const result = await api.syncEditarCertificado(params)
+        .then(() => {
+            const { data } = response;
+            commit(types.SYNC_EDITAR_CERTIFICADO, params)
+        }).catch((e) => {
+            // console.log(e)
+            // throw new TypeError(e, 'error', 10);
+        });
+    return result;
+};

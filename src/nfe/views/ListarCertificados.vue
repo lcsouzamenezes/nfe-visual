@@ -35,6 +35,13 @@
                     <td class="justify-center layout px-0">
                         <v-icon
                                 small
+                                class="mr-2"
+                                @click="editItem(props.item)"
+                        >
+                            edit
+                        </v-icon>
+                        <v-icon
+                                small
                                 @click="dialogExcluir = true; itemIdParaExclusao = props.item._id;"
                         >
                             delete
@@ -43,6 +50,21 @@
                 </template>
             </v-data-table>
         </v-container>
+
+        <v-dialog v-model="dialog" max-width="1180px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">Editar Certificado</span>
+                </v-card-title>
+
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <certificado-form type-form="edite" :item="editedItem"></certificado-form>
+                    </v-container>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
         <!--dialog excluir-->
         <v-dialog
                 v-model="dialogExcluir"
@@ -68,11 +90,14 @@
 <script>
     import { mapActions, mapGetters } from 'vuex';
     import carregando from '@/components/carregando';
+    import CertificadoForm from '@/certificado/components/CertificadoForm';
+
 
     export default {
         name: 'ListarCertificados',
         components : {
-            carregando
+            carregando,
+            CertificadoForm
         },
         data(){
             return {
@@ -85,6 +110,8 @@
                 loading: true,
                 pagination:{rowsPerPage: 10},
                 dialogExcluir: false,
+                dialog: false,
+                editedItem: '',
                 items: [
                     { id: '1', label: 'Produção 1' },
                     { id: '2', label: 'Homologação 2' },
@@ -148,6 +175,10 @@
                 this.dialogExcluir = false;
                 this.excluirCertificadoAction(this.itemIdParaExclusao);
 
+            },
+            editItem (item) {
+                this.editedItem = Object.assign({}, item);
+                this.dialog = true
             },
         }
     }
