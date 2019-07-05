@@ -147,157 +147,155 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        name: 'CertificadoForm',
-        props: {
-            typeForm: {
-                default: 'create',
-                type: String
-            },
-            item: {
-                default: () => {},
-                type: Object
-            }
-        },
-        data(){
-            return {
-                loading: false,
-                statusSnackBar: '',
-                snackbar: false,
-                y: 'top',
-                x: null,
-                mode: '',
-                timeout: 1500,
-                text: '',
-                items: [
-                    { id: '1', label: 'Produção 1' },
-                    { id: '2', label: 'Homologação 2' },
-                ],
-                certificado1: {
-                    razaosocial: '',
-                    cnpj: '',
-                    tpAmb: '',
-                    pass: '',
-                    path: '',
-                    file: {}
-                },
-                maskCnpj: '##.###.###/####-##',
-                valid: true,
-                certificado: '',
-                cnpj1: '',
-                ambiente1: '',
-                data : null,
-                show3: false,
-                password1: 'Password',
-                racaoRules: [
-                    v => !!v || 'Razão Social is required',
-                    v => (v && v.length >= 5) || 'Name must be less than 5 characters'
-                ],
-                cnpjRules: [
-                    v => !!v || 'Razão Social is required',
-                    v => (v && v.length >= 14) || 'Name must be less than 14 characters'
-                ],
-                tipoRules: [
-                    v => !!v || 'Tipo de ambiente is required',
-                ],
-                passwordRules: [
-                    v => !!v || 'Password is required',
-                ],
-                certificadoRules: [
-                    v => !!v || 'Certificado is required',
-                ],
-            }
-        },
-        computed: {
-            ...mapGetters({
-                certificadoGetter: 'certificado/certificadoGetter',
-            })
-        },
-        watch: {
-            item(value){
-                this.certificado1.razaosocial = value.razaosocial,
-                this.certificado1.cnpj = value.cnpj,
-                this.certificado1.tpAmb = value.tpAmb,
-                this.certificado1.pass = value.pass,
-                this.certificado1.file.name = value.path
-            }
-        },
-        methods: {
-            ...mapActions({
-                certificadoAction: 'certificado/certificadoAction',
-                editarCertificadoAction: 'certificado/editarCertificadoAction',
-            }),
-            submitForm () {
-                if (this.$refs.form.validate()) {
-                    this.loading = true;
-                    this.certificadoAction(this.certificado1).then(() => {
-                        this.loading = false;
-                    });
-                    this.menssageSuccess();
-                    this.resetValidation();
-                } else {
-                    this.menssageError(
-                        (this.typeForm === 'create' ? 'Erro ao cadastrar!' : 'Erro ao atualizar!')
-                    );
-                }
-
-            },
-            atualizarForm () {
-                if (this.$refs.form.validate()) {
-                    this.loading = true;
-                    this.editarCertificadoAction(this.certificado1).then(() => {
-                        this.loading = false;
-                    });
-                    this.menssageSuccess();
-                    this.resetValidation();
-                } else {
-                    this.menssageError(
-                        (this.typeForm === 'create' ? 'Erro ao cadastrar!' : 'Erro ao atualizar!')
-                    );
-                }
-
-            },
-            resetValidation () {
-                this.$refs.form.reset()
-            },
-            pickFile () {
-                this.$refs.files.click ()
-            },
-            onFilePicked (e) {
-                const files = e.target.files;
-                if(files[0] !== undefined) {
-                    this.certificado1.file = files[0];
-                    this.getFileMineType(files[0].type);
-                    const fr = new FileReader ();
-                    fr.readAsDataURL(files[0]);
-                    fr.addEventListener('load', () => {
-                        this.imageUrl = fr.result;
-                        this.imageFile = files[0] // this is an image file that can be sent to server...
-                    })
-                } else {
-                    this.certificado1.path = '';
-                    this.imageFile = '';
-                }
-            },
-            getFileMineType(files) {
-                const mimeType = files;
-                if (mimeType != 'application/x-pkcs12') {
-                    this.menssageError('Aceito somente arquivo .pfx');
-                    this.resetValidation();
-                }
-            },
-            menssageSuccess(text = 'Cadastrado com sucesso!'){
-                this.statusSnackBar = 'success';
-                this.text = text;
-                this.snackbar = true;
-            },
-            menssageError(text){
-                this.statusSnackBar = 'error';
-                this.text = text;
-                this.snackbar = true;
-            }
-        }
-    }
+export default {
+  name: 'CertificadoForm',
+  props: {
+    typeForm: {
+      default: 'create',
+      type: String,
+    },
+    item: {
+      default: () => {},
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      loading: false,
+      statusSnackBar: '',
+      snackbar: false,
+      y: 'top',
+      x: null,
+      mode: '',
+      timeout: 1500,
+      text: '',
+      items: [
+        { id: '1', label: 'Produção 1' },
+        { id: '2', label: 'Homologação 2' },
+      ],
+      certificado1: {
+        razaosocial: '',
+        cnpj: '',
+        tpAmb: '',
+        pass: '',
+        path: '',
+        file: {},
+      },
+      maskCnpj: '##.###.###/####-##',
+      valid: true,
+      certificado: '',
+      cnpj1: '',
+      ambiente1: '',
+      data: null,
+      show3: false,
+      password1: 'Password',
+      racaoRules: [
+        v => !!v || 'Razão Social is required',
+        v => (v && v.length >= 5) || 'Name must be less than 5 characters',
+      ],
+      cnpjRules: [
+        v => !!v || 'Razão Social is required',
+        v => (v && v.length >= 14) || 'Name must be less than 14 characters',
+      ],
+      tipoRules: [
+        v => !!v || 'Tipo de ambiente is required',
+      ],
+      passwordRules: [
+        v => !!v || 'Password is required',
+      ],
+      certificadoRules: [
+        v => !!v || 'Certificado is required',
+      ],
+    };
+  },
+  computed: {
+    ...mapGetters({
+      certificadoGetter: 'certificado/certificadoGetter',
+    }),
+  },
+  watch: {
+    item(value) {
+      this.certificado1.razaosocial = value.razaosocial,
+      this.certificado1.cnpj = value.cnpj,
+      this.certificado1.tpAmb = value.tpAmb,
+      this.certificado1.pass = value.pass,
+      this.certificado1.file.name = value.path;
+    },
+  },
+  methods: {
+    ...mapActions({
+      certificadoAction: 'certificado/certificadoAction',
+      editarCertificadoAction: 'certificado/editarCertificadoAction',
+    }),
+    submitForm() {
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        this.certificadoAction(this.certificado1).then(() => {
+          this.loading = false;
+        });
+        this.menssageSuccess('Cadastrado com sucesso!');
+        this.resetValidation();
+      } else {
+        this.menssageError(
+          (this.typeForm === 'create' ? 'Erro ao cadastrar!' : 'Erro ao atualizar!'),
+        );
+      }
+    },
+    atualizarForm() {
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        this.editarCertificadoAction(this.certificado1).then(() => {
+          this.loading = false;
+        });
+        this.menssageSuccess('Atualizado com sucesso!');
+        this.resetValidation();
+      } else {
+        this.menssageError(
+          (this.typeForm === 'create' ? 'Erro ao cadastrar!' : 'Erro ao atualizar!'),
+        );
+      }
+    },
+    resetValidation() {
+      this.$refs.form.reset();
+    },
+    pickFile() {
+      this.$refs.files.click();
+    },
+    onFilePicked(e) {
+      const { files } = e.target;
+      if (files[0] !== undefined) {
+        this.certificado1.file = files[0];
+        this.getFileMineType(files[0].type);
+        const fr = new FileReader();
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result;
+          this.imageFile = files[0]; // this is an image file that can be sent to server...
+        });
+      } else {
+        this.certificado1.path = '';
+        this.imageFile = '';
+      }
+    },
+    getFileMineType(files) {
+      const mimeType = files;
+      if (mimeType !== 'application/x-pkcs12') {
+        this.menssageError('Aceito somente arquivo .pfx');
+        this.resetValidation();
+      }
+    },
+    menssageSuccess(text) {
+      this.statusSnackBar = 'success';
+      this.text = text;
+      this.snackbar = true;
+    },
+    menssageError(text) {
+      this.statusSnackBar = 'error';
+      this.text = text;
+      this.snackbar = true;
+    },
+  },
+};
 </script>

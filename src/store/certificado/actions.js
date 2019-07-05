@@ -24,24 +24,24 @@ export const listarCertificadoAction = ({ commit }) => {
 };
 
 export const excluirCertificadoAction = async ({ commit }, id) => {
-    const result = await api.syncExcluirCertificado(id)
-        .then(() => {
-            commit(types.SYNC_EXCLUIR_CERTIFICADO, id)
-        }).catch((e) => {
-            // console.log(e)
-            // throw new TypeError(e, 'error', 10);
-        });
-    return result;
+  const result = await api.syncExcluirCertificado(id)
+    .then(() => {
+      commit(types.SYNC_EXCLUIR_CERTIFICADO, id);
+    }).catch((e) => {
+      // console.log(e)
+      // throw new TypeError(e, 'error', 10);
+    });
+  return result;
 };
 
 export const editarCertificadoAction = async ({ commit }, params) => {
-    const result = await api.syncEditarCertificado(params)
-        .then(() => {
-            const { data } = response;
-            commit(types.SYNC_EDITAR_CERTIFICADO, params)
-        }).catch((e) => {
-            // console.log(e)
-            // throw new TypeError(e, 'error', 10);
-        });
-    return result;
+  const result = await api.syncEditarCertificado(params)
+    .then(() => {
+      const { data } = response;
+      commit(types.SYNC_EDITAR_CERTIFICADO, params);
+    }).catch((e) => {
+      // console.log(e)
+      // throw new TypeError(e, 'error', 10);
+    });
+  return result;
 };

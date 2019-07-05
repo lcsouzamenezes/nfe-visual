@@ -88,98 +88,97 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
-    import carregando from '@/components/carregando';
-    import CertificadoForm from '@/certificado/components/CertificadoForm';
+import { mapActions, mapGetters } from 'vuex';
+import carregando from '@/components/carregando';
+import CertificadoForm from '@/certificado/components/CertificadoForm';
 
 
-    export default {
-        name: 'ListarCertificados',
-        components : {
-            carregando,
-            CertificadoForm
+export default {
+  name: 'ListarCertificados',
+  components: {
+    carregando,
+    CertificadoForm,
+  },
+  data() {
+    return {
+      options: {
+        color: 'red',
+        width: 290,
+        zIndex: 200,
+      },
+      itemIdParaExclusao: null,
+      loading: true,
+      pagination: { rowsPerPage: 10 },
+      dialogExcluir: false,
+      dialog: false,
+      editedItem: '',
+      items: [
+        { id: '1', label: 'Produção 1' },
+        { id: '2', label: 'Homologação 2' },
+      ],
+      headers: [
+        {
+          text: 'Razão Social',
+          align: 'left',
+          value: 'razaosocial',
         },
-        data(){
-            return {
-                options: {
-                    color: 'red',
-                    width: 290,
-                    zIndex: 200
-                },
-                itemIdParaExclusao: null,
-                loading: true,
-                pagination:{rowsPerPage: 10},
-                dialogExcluir: false,
-                dialog: false,
-                editedItem: '',
-                items: [
-                    { id: '1', label: 'Produção 1' },
-                    { id: '2', label: 'Homologação 2' },
-                ],
-                headers: [
-                    {
-                        text: 'Razão Social',
-                        align: 'left',
-                        value: 'razaosocial',
-                    },
-                    {
-                        text: 'CNPJ',
-                        align: 'left',
-                        value: 'cnpj',
-                    },
-                    {
-                        text: 'Ambiente',
-                        align: 'center',
-                        value: 'tpAmb',
-                    },
-                    {
-                        text: 'Certificado',
-                        align: 'left',
-                        value: 'path',
-                    },
-                    {
-                        text: 'Ações',
-                        align: 'center',
-                    },
-                ],
-                data: []
-            }
+        {
+          text: 'CNPJ',
+          align: 'left',
+          value: 'cnpj',
         },
-        filters: {
-            cpf: function (value) {
-                return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            },
-            cnpj: function (value) {
-                return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-            }
+        {
+          text: 'Ambiente',
+          align: 'center',
+          value: 'tpAmb',
         },
-        watch: {
-            listarCertificadoGetter() {
-                this.loading = false;
-            },
+        {
+          text: 'Certificado',
+          align: 'left',
+          value: 'path',
         },
-        created(){
-            this.listarCertificadoAction();
+        {
+          text: 'Ações',
+          align: 'center',
         },
-        computed: {
-            ...mapGetters({
-                listarCertificadoGetter: 'certificado/listarCertificadoGetter',
-            })
-        },
-        methods: {
-            ...mapActions({
-                listarCertificadoAction: 'certificado/listarCertificadoAction',
-                excluirCertificadoAction: 'certificado/excluirCertificadoAction',
-            }),
-            deletarItem () {
-                this.dialogExcluir = false;
-                this.excluirCertificadoAction(this.itemIdParaExclusao);
-
-            },
-            editItem (item) {
-                this.editedItem = Object.assign({}, item);
-                this.dialog = true
-            },
-        }
-    }
+      ],
+      data: [],
+    };
+  },
+  filters: {
+    cpf(value) {
+      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    },
+    cnpj(value) {
+      return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    },
+  },
+  watch: {
+    listarCertificadoGetter() {
+      this.loading = false;
+    },
+  },
+  created() {
+    this.listarCertificadoAction();
+  },
+  computed: {
+    ...mapGetters({
+      listarCertificadoGetter: 'certificado/listarCertificadoGetter',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      listarCertificadoAction: 'certificado/listarCertificadoAction',
+      excluirCertificadoAction: 'certificado/excluirCertificadoAction',
+    }),
+    deletarItem() {
+      this.dialogExcluir = false;
+      this.excluirCertificadoAction(this.itemIdParaExclusao);
+    },
+    editItem(item) {
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+  },
+};
 </script>
