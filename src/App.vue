@@ -1,5 +1,7 @@
 <template>
-  <v-app>
+  <v-app
+        :dark="isDark"
+  >
     <v-toolbar
         color="blue darken-3"
         dark
@@ -55,13 +57,30 @@
                 </v-avatar>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title> {{ (this.usuarioGetter ? this.usuarioGetter.data.auth.usu_nome : '') }} </v-list-tile-title>
-                <v-list-tile-sub-title>{{ (this.usuarioGetter ? this.usuarioGetter.data.auth.usu_identificacao : '' ) | cpf }}</v-list-tile-sub-title>
+                <v-list-tile-title>
+                  {{ (this.usuarioGetter ? this.usuarioGetter.data.auth.usu_nome : '') }}
+                </v-list-tile-title>
+                <v-list-tile-sub-title>
+                  {{ (this.usuarioGetter ? this.usuarioGetter.data.auth.usu_identificacao : '' ) | cpf }}
+                </v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
           <v-divider/><v-divider/>
           <v-list>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-switch
+                        color="indigo"
+                        v-model="isDark"
+                >
+                </v-switch>
+              </v-list-tile-action>
+
+              <v-list-tile-content>
+                <v-list-tile-title>Modo noturno</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
             <v-list-tile :to="'/nfe/admin/certificado'" >
               <v-list-tile-action>
                 <v-icon color="indigo">note_add</v-icon>
@@ -138,6 +157,7 @@ export default {
   },
   data() {
     return {
+      isDark: false,
       searchNota: '',
     };
   },
